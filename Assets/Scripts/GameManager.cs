@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
     {
         //enable player talk
         print("Talk now!");
-        yield return new WaitForSeconds(roundTimeLength);
+        yield return new WaitForSeconds(negotiationLength);
         EndTalk();
     }
 }
