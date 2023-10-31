@@ -1,8 +1,16 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 guid: 7b37733fd706a2d40ae1414e6ed50a82
+=======
+guid: 1b7109ab8eb195b40b7261812aa47a15
+>>>>>>> Stashed changes
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
   userData: 
+<<<<<<< Updated upstream
   assetBundleName: 
+=======
+  assetBundleName: unityandroidble
+>>>>>>> Stashed changes
   assetBundleVariant: 
