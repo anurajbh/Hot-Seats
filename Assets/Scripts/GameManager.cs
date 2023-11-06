@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>
 {
-    public GameManager _instance;
 
     //public parameters
     public float roundTimeLength;
@@ -16,17 +15,6 @@ public class GameManager : MonoBehaviour
     //private parameters
     [SerializeField] bool isRoundRunning = false;
     [SerializeField] bool isNegotiationOccurring = false;
-    void Awake()
-    {
-        if(_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
-    }
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.N))
