@@ -1013,10 +1013,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 277c7d004b5732d4dae3e98add43d6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deviceButton: {fileID: 3530289157807453847, guid: 7bc63d3fc4306874092b9e3218b99e33, type: 3}
+  _deviceButton: {fileID: 3530289157807453847, guid: 7bc63d3fc4306874092b9e3218b99e33,
+    type: 3}
   _deviceList: {fileID: 0}
   distText: {fileID: 1196389584}
-  scanTime: 10
+  scanTime: 8
   scanButton: {fileID: 795552205}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

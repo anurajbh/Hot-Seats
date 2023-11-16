@@ -29,7 +29,7 @@ public class ExampleBleInteractor : MonoBehaviour
     {
         devices = new Dictionary<string, BleDevice> ();
         deviceDistances = new Dictionary<string, string>();
-        ScanForDevices();
+        //ScanForDevices();
     }
 
     public IEnumerator ScanTimeout(float time)
@@ -37,11 +37,11 @@ public class ExampleBleInteractor : MonoBehaviour
         yield return new WaitForSeconds(time);
         _isScanning = false;
         scanButton.interactable = true;
+       //BleManager.Instance.Initialize();
     }
 
     public void ScanForDevices()
     {
-
        // distText.text = "";
             Debug.Log("Trying to request...");
 
@@ -54,10 +54,12 @@ public class ExampleBleInteractor : MonoBehaviour
 
         if (!_isScanning)
         {
+            //BleManager.Instance.Initialize();
             _isScanning = true;
             BleManager.Instance.SearchForDevices((int)scanTime * 1000, OnDeviceFound);
             scanButton.interactable = false;
-            StartCoroutine(ScanTimeout(scanTime));
+            StartCoroutine(ScanTimeout(scanTime + 18));
+            distText.text = "";
         }
     }
 
@@ -65,11 +67,20 @@ public class ExampleBleInteractor : MonoBehaviour
     {
 
         distText.text = "";
+
+        int closestDist = 100;
+        string closestPlayer = "";
         foreach (String s in deviceDistances.Keys)
         {
-            distText.text += s + ": " + deviceDistances[s] + "dBm\n";
+            if(Mathf.Abs(int.Parse(deviceDistances[s])) < closestDist) {
+                closestPlayer = s;
+                closestDist = Mathf.Abs(int.Parse(deviceDistances[s]));
+             }
+            //distText.text += s + ": " + deviceDistances[s] + "dBm\n";
 
         }
+
+        distText.text = "CLOSEST PLAYER:\n" + closestPlayer;
     }
 
     public void Update()
@@ -86,6 +97,8 @@ public class ExampleBleInteractor : MonoBehaviour
     {
         //DeviceButton button = Instantiate(_deviceButton, _deviceList).GetComponent<DeviceButton>();
         //button.Show(device);
+
+        //Debug.Log(device.Name);
         if(deviceNames.ContainsKey(device.Name))
         {
             devices[deviceNames[device.Name]] = device;
