@@ -33,42 +33,12 @@ public class ExampleBleInteractor : MonoBehaviour
     {
         devices = new Dictionary<string, BleDevice> ();
         deviceDistances = new Dictionary<string, string>();
-<<<<<<< Updated upstream
-        //ScanForDevices();
-=======
-        // ScanForDevices();
         scanButton.interactable = false;
         EasyWiFiController.OnScanCommand += new EasyWiFiController.ScanCommandHandler(ScanForDevices);
         wifiMan = GameObject.FindObjectOfType<EasyWiFiManager>();
->>>>>>> Stashed changes
     }
 
-    public IEnumerator ScanTimeout(float time)
-    {
-        Debug.Log("STARTING SCAN TIMEOUT");
-        float timeElapsed = 0;
-        while (timeElapsed < time)
-        {
-            yield return new WaitForSeconds(1);
-            timeElapsed += 1;
-            Debug.Log("TIME REMAINING IN SCAN: " + (time - timeElapsed).ToString());
-
-        }
-        Debug.Log("END OF SCAN TIMEOUT");
-        _isScanning = false;
-<<<<<<< Updated upstream
-        scanButton.interactable = true;
-       //BleManager.Instance.Initialize();
-=======
-        //scanButton.interactable = true;
-        if(wifiMan != null)
-        {
-            Debug.Log("SENDING PLACEHOLDER RESPONSE");
-            wifiMan.sendClientBluetoothData("RESPONSE STRING");
-        }
-        
->>>>>>> Stashed changes
-    }
+    
 
     public void ScanForDevices()
     {
@@ -82,22 +52,13 @@ public class ExampleBleInteractor : MonoBehaviour
 
         if (!_isScanning)
         {
-<<<<<<< Updated upstream
-            //BleManager.Instance.Initialize();
-=======
             Debug.Log("BLE INTERACTOR: SCAN STARTED");
->>>>>>> Stashed changes
             _isScanning = true;
             scanTimer = scanTime;
             BleManager.Instance.SearchForDevices((int)scanTime * 1000, OnDeviceFound);
             scanButton.interactable = false;
-<<<<<<< Updated upstream
             StartCoroutine(ScanTimeout(scanTime + 18));
             distText.text = "";
-=======
-            //Debug.Log("CALLING SCANTIMEOUT");
-           // StartCoroutine(ScanTimeout(scanTime));
->>>>>>> Stashed changes
         }
     }
 
