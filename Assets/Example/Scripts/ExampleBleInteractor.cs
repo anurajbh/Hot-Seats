@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.UI;
+using EasyWiFi.Core;
 
 public class ExampleBleInteractor : MonoBehaviour
 {
@@ -17,49 +18,86 @@ public class ExampleBleInteractor : MonoBehaviour
     private bool _isScanning = false;
     public float scanTime = 10f;
     public Button scanButton;
+    float scanTimer = 0f;
     //List<BleDevice> devices;
     //List<string> deviceNames = new List<string> { "hot seats red" };
+    public EasyWiFiManager wifiMan;
 
 
     public Dictionary<string, string> deviceNames = new Dictionary<string, string> { { "hot seats red", "RED" }, { "BlueCharm_20502", "ORANGE"}, { "BlueCharm_10482", "YELLOW" } };
     public Dictionary<string, BleDevice> devices;
     public Dictionary<string, string> deviceDistances;
 
+
     public void Awake()
     {
         devices = new Dictionary<string, BleDevice> ();
         deviceDistances = new Dictionary<string, string>();
+<<<<<<< Updated upstream
         //ScanForDevices();
+=======
+        // ScanForDevices();
+        scanButton.interactable = false;
+        EasyWiFiController.OnScanCommand += new EasyWiFiController.ScanCommandHandler(ScanForDevices);
+        wifiMan = GameObject.FindObjectOfType<EasyWiFiManager>();
+>>>>>>> Stashed changes
     }
 
     public IEnumerator ScanTimeout(float time)
     {
-        yield return new WaitForSeconds(time);
+        Debug.Log("STARTING SCAN TIMEOUT");
+        float timeElapsed = 0;
+        while (timeElapsed < time)
+        {
+            yield return new WaitForSeconds(1);
+            timeElapsed += 1;
+            Debug.Log("TIME REMAINING IN SCAN: " + (time - timeElapsed).ToString());
+
+        }
+        Debug.Log("END OF SCAN TIMEOUT");
         _isScanning = false;
+<<<<<<< Updated upstream
         scanButton.interactable = true;
        //BleManager.Instance.Initialize();
+=======
+        //scanButton.interactable = true;
+        if(wifiMan != null)
+        {
+            Debug.Log("SENDING PLACEHOLDER RESPONSE");
+            wifiMan.sendClientBluetoothData("RESPONSE STRING");
+        }
+        
+>>>>>>> Stashed changes
     }
 
     public void ScanForDevices()
     {
        // distText.text = "";
-            Debug.Log("Trying to request...");
 
-            Permission.RequestUserPermissions(new string[] { "android.permission.BLUETOOTH", "android.permission.BLUETOOTH_ADMIN", "android.permission.BLUETOOTH_SCAN", "android.permission.BLUETOOTH_CONNECT", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION" });
+            //Permission.RequestUserPermissions(new string[] { "android.permission.BLUETOOTH", "android.permission.BLUETOOTH_ADMIN", "android.permission.BLUETOOTH_SCAN", "android.permission.BLUETOOTH_CONNECT", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION" });
 
-            Permission.RequestUserPermissions(new string[] { "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION" });
+            //Permission.RequestUserPermissions(new string[] { "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION" });
 
-        Debug.Log("Reached end of request code...");
         
 
         if (!_isScanning)
         {
+<<<<<<< Updated upstream
             //BleManager.Instance.Initialize();
+=======
+            Debug.Log("BLE INTERACTOR: SCAN STARTED");
+>>>>>>> Stashed changes
             _isScanning = true;
+            scanTimer = scanTime;
             BleManager.Instance.SearchForDevices((int)scanTime * 1000, OnDeviceFound);
             scanButton.interactable = false;
+<<<<<<< Updated upstream
             StartCoroutine(ScanTimeout(scanTime + 18));
             distText.text = "";
+=======
+            //Debug.Log("CALLING SCANTIMEOUT");
+           // StartCoroutine(ScanTimeout(scanTime));
+>>>>>>> Stashed changes
         }
     }
 
@@ -85,11 +123,23 @@ public class ExampleBleInteractor : MonoBehaviour
 
     public void Update()
     {
-        //if (devices[0] != null)
-        //{
+        if (_isScanning)
+        {
+            scanTimer -= Time.deltaTime;
 
-        //    devices[0].GetRssi((_, rsi) => distText.text = rsi + " dBm");
-        //}
+            if(scanTimer <= 0)
+            {
+                _isScanning = false;
+                Debug.Log("END OF SCAN TIMEOUT");
+                _isScanning = false;
+                //scanButton.interactable = true;
+                if (wifiMan != null)
+                {
+                    Debug.Log("SENDING PLACEHOLDER RESPONSE");
+                    wifiMan.sendClientBluetoothData("RESPONSE STRING");
+                }
+            }
+        }
     }
 
 
