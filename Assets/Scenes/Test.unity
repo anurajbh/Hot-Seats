@@ -629,7 +629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 0
   playerColor: {r: 0, g: 1, b: 0, a: 1}
-  playerScore: 0
+  playerScore: 5
   isSitting: 0
 --- !u!61 &314197387
 BoxCollider2D:
